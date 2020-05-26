@@ -1,0 +1,17 @@
+#nav ul li{
+     display: inline-block;
+     border: 1px solid darkgreen;
+     padding: 5px;
+     width: 200px;
+     text-align: center;
+ }
+#nav ul li  {
+    text-decoration: none;
+    color:green;
+    font-family: Arial, serif;
+    display: inline-block;
+    font-size: 24px;
+}
+img {
+    width: 200px;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/homeStyle.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+            integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div>
+    <h3 class="text-center text-danger" th:text="${param.error}"></h3>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form th:action="@{/books}" th:method="post" enctype="multipart/form-data" th:object="${book}">
+                <input type="text" hidden="hidden" name="id" th:value="${book.getId()}">
+
+                <div class="form-group">
+                    <h4 class="text-danger"
+                        th:if="${#fields.hasErrors('title')}"
+                        th:errors="*{title}"></h4>
+                    <label>Book Title</label>
+                    <input type="text" name="title" th:value="${book.getTitle()}" placeholder="Enter title">
+                </div>
+
+                <div class="form-group">
+                    <h4 class="text-danger"
+                        th:if="${#fields.hasErrors('quantity')}"
+                        th:errors="*{quantity}"></h4>
+                    <label>Quantity</label>
+                    <input type="text" name="quantity" th:value="${book.getQuantity()}"
+                           placeholder="Enter quantity">
+                </div>
+
+                <div class="form-group">
+                    <h4 class="text-danger"
+                        th:if="${#fields.hasErrors('category.id')}"
+                        th:errors="*{category.id}"></h4>
+                    <label>Category</label>
+                    <select name="category.id" class="form-control">
+                        <option th:each="category: ${categories}"
+                                th:value="${category.getId()}"
+                                th:text="${category.getName()}"
+                                th:selected="${ book.getCategory() != null && book.getCategory().getId()  == category.getId()}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Image</label>
+                    <input name="image" type="file" class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                <a type="button" th:href="@{/books}" class="btn btn-info btn-sm">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
