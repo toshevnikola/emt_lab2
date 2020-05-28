@@ -19,7 +19,7 @@ public class Book {
     private Integer quantity;
     @Lob
     private String base64Image;
-    @ManyToOne
+    @ManyToOne()
     private Category category;
     public Book() {
     }

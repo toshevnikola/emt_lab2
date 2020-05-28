@@ -17,8 +17,8 @@ public class Category {
     String name;
     String description;
 
-//    @OneToMany (mappedBy = "category")
-//    List<Book> books;
+    @OneToMany (mappedBy = "category")
+    List<Book> books;
 
 
     public Long getId() {

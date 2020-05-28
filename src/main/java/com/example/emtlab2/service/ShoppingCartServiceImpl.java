@@ -28,18 +28,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public List<Book> listItems(String username) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUserUsernameAndStatus(username,CartStatus.CREATED);
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserUsernameAndStatus(username, CartStatus.CREATED);
         return shoppingCart.getBooks();
     }
 
     @Override
     public ShoppingCart createShoppingCart(String username) {
         User user = userService.findById(username);
-        if(this.shoppingCartRepository.existsByUserUsernameAndStatus(username, CartStatus.CREATED)) {
+        if (this.shoppingCartRepository.existsByUserUsernameAndStatus(username, CartStatus.CREATED)) {
             throw new ActiveShoppingCartAlreadyExists();
         }
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
+        this.shoppingCartRepository.save(shoppingCart);
         return shoppingCart;
     }
 
@@ -57,9 +58,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = getActiveShoppingCartOrCreateNew(username);
         shoppingCart.setBooks(
                 shoppingCart.getBooks()
-                .stream()
-                .filter(item -> !item.getId().equals(bookId))
-                .collect(Collectors.toList())
+                        .stream()
+                        .filter(item -> !item.getId().equals(bookId))
+                        .collect(Collectors.toList())
         );
         return this.shoppingCartRepository.save(shoppingCart);
     }
@@ -67,17 +68,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     //helper
     private ShoppingCart getActiveShoppingCartOrCreateNew(String username) {
         ShoppingCart shoppingCart = this.shoppingCartRepository.findByUserUsernameAndStatus(username, CartStatus.CREATED);
-        if(shoppingCart == null) {
+        if (shoppingCart == null) {
             shoppingCart = new ShoppingCart();
             shoppingCart.setUser(userService.findById(username));
             shoppingCart = this.shoppingCartRepository.save(shoppingCart);
         }
         return shoppingCart;
     }
+
     @Override
     public ShoppingCart cancelShoppingCart(String username) {
         ShoppingCart shoppingCart = this.shoppingCartRepository.findByUserUsernameAndStatus(username, CartStatus.CREATED);
-        if(shoppingCart == null) {
+        if (shoppingCart == null) {
             throw new ShoppingCartNotActiveException();
         }
         shoppingCart.setStatus(CartStatus.CANCELED);
@@ -93,10 +95,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
         List<Book> books = shoppingCart.getBooks();
         for (Book b : books) {
-            if(b.getQuantity() <= 0) {
+            if (b.getQuantity() <= 0) {
                 throw new BookOutOfStockException(b.getId());
             }
-            b.setQuantity(b.getQuantity() -1);
+            b.setQuantity(b.getQuantity() - 1);
         }
         shoppingCart.setBooks(books);
         shoppingCart.setStatus(CartStatus.FINISHED);
