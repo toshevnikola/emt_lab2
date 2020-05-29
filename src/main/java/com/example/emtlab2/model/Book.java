@@ -21,14 +21,18 @@ public class Book {
     private String base64Image;
     @ManyToOne()
     private Category category;
+    private Double price;
+
     public Book() {
     }
-    public Book(Long id, String title, Integer quantity, Category category, String base64Image) {
+
+    public Book(Long id, String title, Integer quantity, Category category, String base64Image, Double price) {
         this.id = id;
         this.title = title;
         this.quantity = quantity;
         this.category = category;
         this.base64Image = base64Image;
+        this.price = price;
     }
 
 
@@ -70,5 +74,13 @@ public class Book {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/homeStyle.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+            integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div id="nav">
+    <ul>
+        <li><a href="home">Home</a></li>
+        <li><a href="books">Books</a></li>
+        <li><a href="charge">Charge</a></li>
+    </ul>
+</div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Image</th>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${shoppingCart.getBooks()}">
+        <td><img style="width: 200px" th:src="${book.getBase64Image()}"></td>
+        <td th:text="${book.getId()}"></td>
+        <td th:text="${book.getTitle()}"></td>
+        <td th:text="${book.getQuantity()}"></td>
+        <td th:text="${book.getPrice()}"></td>
+        <td th:text="${book.getCategory() != null} ? ${book.getCategory().getName()} : 'No Category'"></td>
+
+    </tr>
+    </tbody>
+</table>
+
+<h3 th:if="${param.error}" th:text="${param.error}" class="text-danger"></h3>
+
+<form action="/charge" method="post">
+
+    <input type="hidden" th:value="${amount}" th:name="amount"/>
+    <input type="hidden" th:value="${currency}" th:name="currency"/>
+    <label>
+        <textarea th:name="description"></textarea>
+    </label>
+    <script
+            src='https://checkout.stripe.com/checkout.js'
+            class='stripe-button'
+            th:attr=
+                    'data-key=${stripePublicKey},
+                        data-amount=${amount},
+                        data-currency=${currency}'
+            data-name='EMT'
+            data-description='Lab3'
+            data-image='https://www.baeldung.com/wp-content/themes/baeldung/favicon/android-chrome-192x192.png'
+            data-locale='auto'
+            data-zip-code='false'>
+    </script>
+</form>
+<h3 th:text="${amount}/100 + ' ' + ${currency}"></h3>
+
+</body>
+</html>

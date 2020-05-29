@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/shopping-carts")
 public class ShoppingCartRestController {
-    private  final ShoppingCartService shoppingCartService;
+    private final ShoppingCartService shoppingCartService;
     private final AuthService authService;
 
     public ShoppingCartRestController(ShoppingCartService shoppingCartService, AuthService authService) {
@@ -24,25 +24,30 @@ public class ShoppingCartRestController {
     public List<Book> listItems() {
         return shoppingCartService.listItems(this.authService.getCurrentUserId());
     }
+
     @PostMapping
     public ShoppingCart createShoppingCart() {
         return this.shoppingCartService.createShoppingCart(this.authService.getCurrentUserId());
     }
+
     @PatchMapping("/{bookId}/books")
-    public ShoppingCart addBookToShoppingCart(@PathVariable  Long bookId) {
+    public ShoppingCart addBookToShoppingCart(@PathVariable Long bookId) {
         return this.shoppingCartService.addBookToShoppingCart(this.authService.getCurrentUserId(), bookId);
     }
+
     @DeleteMapping("/{bookId}/books")
-    public ShoppingCart removeBookFromShoppingCart(@PathVariable  Long bookId) {
+    public ShoppingCart removeBookFromShoppingCart(@PathVariable Long bookId) {
         return this.shoppingCartService.removeBookFromShoppingCart(this.authService.getCurrentUserId(), bookId);
     }
+
     @DeleteMapping
     public ShoppingCart cancelShoppingCart() {
         return this.shoppingCartService.cancelShoppingCart(this.authService.getCurrentUserId());
     }
+
     @PostMapping("/checkout")
     public ShoppingCart checkoutShoppingCart() {
-        return this.shoppingCartService.checkoutShoppingCart(this.authService.getCurrentUserId());
+        return null;
     }
 
 

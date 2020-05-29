@@ -13,9 +13,9 @@
 
 <div id="nav">
     <ul>
-        <li><a href="home">Home</a></li>
-        <li><a href="books">Books</a></li>
-        <li><a href="contact">Contact</a></li>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/books">Books</a></li>
+        <li><a href="/charge">Charge</a></li>
     </ul>
 </div>
 
@@ -30,6 +30,7 @@
                 <th>Id</th>
                 <th>Title</th>
                 <th>Quantity</th>
+                <th>Price</th>
                 <th>Category</th>
             </tr>
         </thead>
@@ -39,6 +40,7 @@
                 <td th:text="${book.getId()}"> </td>
                 <td th:text="${book.getTitle()}"> </td>
                 <td th:text="${book.getQuantity()}"> </td>
+                <td th:text="${book.getPrice()}"> </td>
                 <td th:text="${book.getCategory() != null} ? ${book.getCategory().getName()} : 'No Category'"></td>
 
                 <td>
@@ -57,6 +59,7 @@
         </tbody>
     </table>
     <a href="/books/add-new" class="btn btn-md btn-light ">Add Book</a>
+    <a href="/payment/charge" class="btn btn-md btn-primary ">Checkout</a>
 </div>
 
 </body>
