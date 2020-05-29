@@ -4,6 +4,7 @@ import com.example.emtlab2.model.enumerations.CartStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,7 @@ public class ShoppingCart {
     private CartStatus status = CartStatus.CREATED;
 
     @ManyToOne
-    @JoinColumn(name="user_id") //optional
+    @JoinColumn(name = "user_id") //optional
     private User user;
 
     @ManyToMany
@@ -27,7 +28,7 @@ public class ShoppingCart {
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
 
     public Long getId() {
         return id;

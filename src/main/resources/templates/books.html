@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+            integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+            crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../static/homeStyle.css">
 
 </head>
@@ -22,44 +27,61 @@
 <div>
     <h3 class="text-center text-danger" th:text="${param.error}"></h3>
 </div>
+
+<div>
+    <h3 class="text-center text-info" th:text="${param.message}"></h3>
+</div>
 <div>
     <table class="table table-striped">
         <thead>
-            <tr>
-                <th>Image</th>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Category</th>
-            </tr>
+        <tr>
+            <th>Image</th>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Category</th>
+        </tr>
         </thead>
         <tbody>
-            <tr th:each="book : ${books}">
-                <td><img style="width: 200px" th:src="${book.getBase64Image()}"></td>
-                <td th:text="${book.getId()}"> </td>
-                <td th:text="${book.getTitle()}"> </td>
-                <td th:text="${book.getQuantity()}"> </td>
-                <td th:text="${book.getPrice()}"> </td>
-                <td th:text="${book.getCategory() != null} ? ${book.getCategory().getName()} : 'No Category'"></td>
+        <tr th:each="book : ${books}">
+            <td><img style="width: 200px" th:src="${book.getBase64Image()}"></td>
+            <td th:text="${book.getId()}"></td>
+            <td th:text="${book.getTitle()}"></td>
+            <td th:text="${book.getQuantity()}"></td>
+            <td th:text="${book.getPrice()}"></td>
+            <td th:text="${book.getCategory() != null} ? ${book.getCategory().getName()} : 'No Category'"></td>
 
-                <td>
-                    <a class="btn btn-info btn-sm"
-                       th:href="@{/books/{id}/edit(id=${book.getId()})}">
-                        Edit
-                    </a>
+            <td>
+                <a class="btn btn-info btn-sm"
+                   th:href="@{/books/{id}/edit(id=${book.getId()})}">
+                    Edit
+                </a>
 
                 <form th:action="@{/books/{id}/delete(id=${book.getId()})}" th:method="delete">
                     <button type="submit" class="btn btn-danger btn-sm">
                         Delete
                     </button>
                 </form>
-                </td>
-            </tr>
+
+                <form th:action="@{/cart/books/add/{id}(id=${book.getId()})}" th:method="post">
+                    <button type="submit" class="btn btn-info btn-sm">
+                        Add To Cart
+                    </button>
+                </form>
+
+                <form th:action="@{/cart/books/remove/{id}(id=${book.getId()})}" th:method="post">
+                    <button type="submit" class="btn btn-warning btn-sm">
+                        Remove From Cart
+                    </button>
+                </form>
+
+            </td>
+        </tr>
         </tbody>
     </table>
     <a href="/books/add-new" class="btn btn-md btn-light ">Add Book</a>
-    <a href="/payment/charge" class="btn btn-md btn-primary ">Checkout</a>
+    <a href="/charge" class="btn btn-md btn-primary ">Checkout</a>
 </div>
 
 </body>

@@ -29,7 +29,6 @@
         <th>Image</th>
         <th>Id</th>
         <th>Title</th>
-        <th>Quantity</th>
         <th>Price</th>
         <th>Category</th>
     </tr>
@@ -39,7 +38,6 @@
         <td><img style="width: 200px" th:src="${book.getBase64Image()}"></td>
         <td th:text="${book.getId()}"></td>
         <td th:text="${book.getTitle()}"></td>
-        <td th:text="${book.getQuantity()}"></td>
         <td th:text="${book.getPrice()}"></td>
         <td th:text="${book.getCategory() != null} ? ${book.getCategory().getName()} : 'No Category'"></td>
 

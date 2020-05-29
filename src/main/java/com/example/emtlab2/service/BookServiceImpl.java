@@ -43,7 +43,7 @@ public class BookServiceImpl implements BookService {
         Category category = this.categoryService.findById(b.getCategory().getId());
         b.setCategory(category);
 
-        if(image != null) {
+        if (image != null) {
             byte[] imageBytes = image.getBytes();
             String base64Image = String.format("data:%s;base64,%s", image.getContentType(), Base64.getEncoder().encodeToString(imageBytes));
             b.setBase64Image(base64Image);
@@ -59,7 +59,8 @@ public class BookServiceImpl implements BookService {
         updatedBook.setCategory(category);
         updatedBook.setTitle(book.getTitle());
         updatedBook.setQuantity(book.getQuantity());
-        if(image != null) {
+        updatedBook.setPrice(book.getPrice());
+        if (image != null) {
             byte[] imageBytes = image.getBytes();
             String base64Image = String.format("data:%s;base64,%s", image.getContentType(), Base64.getEncoder().encodeToString(imageBytes));
             updatedBook.setBase64Image(base64Image);

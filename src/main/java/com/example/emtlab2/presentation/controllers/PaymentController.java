@@ -44,9 +44,9 @@ public class PaymentController {
     public String checkout(ChargeRequest chargeRequest, Model model) {
         try {
             this.shoppingCartService.checkoutShoppingCart(this.authService.getCurrentUserId(), chargeRequest);
-            return "redirect:/books";
+            return "redirect:/books?message=Successful Payment";
         } catch (RuntimeException ex) {
-            return "redirect:/charge/error=" + ex.getLocalizedMessage();
+            return "redirect:/charge/error=" + ex.getMessage();
         }
     }
 }
