@@ -15,6 +15,8 @@ import javax.persistence.*;
 public class Transaction {
     @Id
     private String id;
+    @ManyToOne
+    private User senderUser;
     private String object;
     private Long amount;
     private Long amountRefunded;

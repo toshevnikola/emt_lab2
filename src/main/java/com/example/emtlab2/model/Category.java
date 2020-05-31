@@ -12,14 +12,13 @@ import java.util.List;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Size(min = 2)
-    String name;
-    String description;
+    private String name;
+    private String description;
 
-//    @OneToMany (mappedBy = "books")
-//    List<Book> books;
-
+//    @OneToMany(mappedBy = "category_id")
+    // List<Book> books;
 
     public Long getId() {
         return id;

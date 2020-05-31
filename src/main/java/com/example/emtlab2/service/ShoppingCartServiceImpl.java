@@ -76,6 +76,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                         .filter(item -> !item.getId().equals(bookId))
                         .collect(Collectors.toList())
         );
+        if (shoppingCart.getBooks().isEmpty()) {
+            shoppingCart.setStatus(CartStatus.CANCELED);
+        }
         return this.shoppingCartRepository.save(shoppingCart);
     }
 
@@ -125,6 +128,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 
         Transaction t = new Transaction();
+        t.setSenderUser(userService.findById(username));
         t.setId(charge.getId());
         t.setObject(charge.getObject());
         t.setAmount(charge.getAmount());

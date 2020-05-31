@@ -1,5 +1,7 @@
 package com.example.emtlab2.model;
 
+import com.sun.istack.Nullable;
+import org.hibernate.annotations.Cascade;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -19,7 +21,8 @@ public class Book {
     private Integer quantity;
     @Lob
     private String base64Image;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
+    @Nullable
     private Category category;
     private Double price;
 

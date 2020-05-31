@@ -11,7 +11,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
             integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../static/homeStyle.css">
+    <link rel="stylesheet" href="/homeStyle.css">
 
 </head>
 <body>
@@ -21,6 +21,10 @@
         <li><a href="/home">Home</a></li>
         <li><a href="/books">Books</a></li>
         <li><a href="/charge">Charge</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/admin">Admin</a></li>
+        <li sec:authentication="name"></li>
+        <li><a href="/logout">Logout</a></li>
+
     </ul>
 </div>
 
@@ -52,13 +56,13 @@
             <td th:text="${book.getPrice()}"></td>
             <td th:text="${book.getCategory() != null} ? ${book.getCategory().getName()} : 'No Category'"></td>
 
-            <td>
-                <a class="btn btn-info btn-sm"
+            <td >
+                <a class="btn btn-info btn-sm" sec:authorize="hasRole('ROLE_ADMIN')"
                    th:href="@{/books/{id}/edit(id=${book.getId()})}">
                     Edit
                 </a>
 
-                <form th:action="@{/books/{id}/delete(id=${book.getId()})}" th:method="delete">
+                <form th:action="@{/books/{id}/delete(id=${book.getId()})}" th:method="delete" sec:authorize="hasRole('ROLE_ADMIN')">
                     <button type="submit" class="btn btn-danger btn-sm">
                         Delete
                     </button>
@@ -80,7 +84,7 @@
         </tr>
         </tbody>
     </table>
-    <a href="/books/add-new" class="btn btn-md btn-light ">Add Book</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/books/add-new" class="btn btn-md btn-light ">Add Book</a>
     <a href="/charge" class="btn btn-md btn-primary ">Checkout</a>
 </div>
 

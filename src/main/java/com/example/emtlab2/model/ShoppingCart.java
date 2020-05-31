@@ -1,8 +1,10 @@
 package com.example.emtlab2.model;
 
 import com.example.emtlab2.model.enumerations.CartStatus;
+import com.sun.istack.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,8 @@ public class ShoppingCart {
     @JoinColumn(name = "user_id") //optional
     private User user;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @Nullable
     @JoinTable(name = "cart_books",
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")

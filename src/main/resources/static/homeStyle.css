@@ -1,17 +1,38 @@
-#nav ul li{
-     display: inline-block;
-     border: 1px solid darkgreen;
-     padding: 5px;
-     width: 200px;
-     text-align: center;
- }
-#nav ul li  {
-    text-decoration: none;
-    color:green;
-    font-family: Arial, serif;
-    display: inline-block;
-    font-size: 24px;
+#nav {
+    background-color: black;
 }
+
+#nav ul li {
+    display: inline-block;
+    padding: 5px;
+    width: 200px;
+    text-align: center;
+}
+
+#nav ul li {
+    text-decoration: none;
+    color: lightsalmon;
+    font-family: Helvetica, serif;
+    display: inline-block;
+    font-size: 18px;
+}
+
+#nav ul li a {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+
+}
+
+#nav ul li:hover {
+    text-decoration: none;
+    color: gray;
+}
+#nav ul li a:hover {
+    text-decoration: none;
+    color: gray;
+}
+
 img {
     width: 200px;
 }
